@@ -1,0 +1,8 @@
+# No environments in the repo
+.venv/
+# No API keys in the repo please
+pushbullet_token.py
+# No browser sessions (needed by ytmusicapi) in the repo either
+*.json
+# Keep your music taste's to yourself please
+*.ini
