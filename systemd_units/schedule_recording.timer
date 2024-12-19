@@ -1,0 +1,9 @@
+[Unit]
+Description="Checks the KMHD website for the broadcast schedule and runs the `systemd-run` command to schedule the recorder"
+
+[Timer]
+OnCalendar=*-*-* 22:27
+Unit=schedule_recording.service
+
+[Install]
+WantedBy=timers.target

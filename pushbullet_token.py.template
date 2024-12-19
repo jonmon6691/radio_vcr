@@ -1,0 +1,4 @@
+# This template exists to try and help you not upload API tokens to github
+# `cp pushbullet_token.py.template pushbullet_token.py`
+
+PUSHBULLET_API_TOKEN = "    DO NOT EDIT THIS TEMPLATE! Copy to a new file without the template suffix first.    "
