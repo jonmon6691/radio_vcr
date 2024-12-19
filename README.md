@@ -3,9 +3,13 @@ Record KMHD shows while you sleep!
 
 Do you listen to [KMHD](https://www.kmhd.org/give/) on an analog radio at home and wish you could listen to late-night broadcasts that aren't posted online anywhere?
 
-Well then you must be me! Good! Because this code isn't portable and I'm only uploading it here in case my pi gets fried or something.
+Well then you must be me! Which is good because this code isn't portable and I'm only uploading it here in case my pi gets fried or something.
 
 <img src="doc/P_20241218_225835.jpg" width=300> <img src="doc/P_20241218_225603.jpg" width=300>
+
+### After upload: 
+_Note: battery percentage was exactly 89.1% ;)_ <br>
+<img src="doc/screenshot.jpg" width=400>
 
 # What is it?
 
@@ -30,27 +34,30 @@ Execution flow:
 
 # Setup
 
+`mkdir -p /home/$USER/src/ && cd /home/$USER/src && git clone https://github.com/jonmon6691/radio_vcr.git && cd radio_vcr`
+<br> Only works if it's cloned to ~/src/radio_vcr, sorry
+
 `sudo apt-get install sox libsox-fmt-mp3`
+<br> sox is like ffmpeg for audio
 
-`python -m venv .venv`
-
-`source .venv/bin/activate`
-
-`pip install bs4 ytmusicapi pushbullet.py`
+`python -m venv .venv` <br>
+`source .venv/bin/activate` <br>
+`pip install bs4 ytmusicapi pushbullet.py` <br>
+Create a new virtual environment and install the required python packages
 
 `ytmusicapi browser`
-<br> Follow instructions from https://ytmusicapi.readthedocs.io/en/stable/setup/browser.html
+<br> Set up authentication by following instructions from https://ytmusicapi.readthedocs.io/en/stable/setup/browser.html
 
 `./schedule_shows.py --get_shows > my_shows.ini`
 <br> Edit `my_shows.ini`, to leave just the list you're interested in
 
 `deactivate`
+<br> Leave the virtual environment
 
 `cp pushbullet_token.py.template pushbullet_token.py`
 <br> Add your pushbullet API key to the file
 
-`cp systemd_units/* ~/.config/systemd/user/`
-
-`systemctl --user start schedule_recording.timer`
-
-`sudo loginctl enable-linger $SUDO_USER`
+`cp systemd_units/* ~/.config/systemd/user/` <br>
+`systemctl --user start schedule_recording.timer` <br>
+`sudo loginctl enable-linger $SUDO_USER` <br>
+Set up systemd to kick off the tool. It will always run, even after reboots or crashes, until you stop the timer.
