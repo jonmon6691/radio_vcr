@@ -7,13 +7,11 @@ import urllib.request
 
 from bs4 import BeautifulSoup
 
-import pushbullet_token
-
 def get_url(offset=0) -> str:
     now = datetime.datetime.now()
     offset = datetime.timedelta(days=offset)
     now += offset
-    spec = f"https://www.kmhd.org/schedule/{now.year}/{now.month}/{now.day}/"
+    spec = f"https://www.kmhd.org/schedule/{now.year}/{now.strftime('%m')}/{now.strftime('%d')}/"
     return spec
 
 class Show:
@@ -44,6 +42,7 @@ def shows_next_24h() -> [datetime.datetime]:
         b = [l for l in script[0].text.split(';') if l.startswith(content_prefix)]
         if len(b) == 0:
             import PushBullet
+            import pushbullet_token
             pb = PushBullet(pushbullet_token.PUSHBULLET_API_TOKEN)
             pb.push_note("VCR Fatal: They changed their javascript!!")
             exit(1)

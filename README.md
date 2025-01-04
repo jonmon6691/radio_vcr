@@ -48,7 +48,7 @@ Create a new virtual environment and install the required python packages
 `ytmusicapi browser`
 <br> Set up authentication by following instructions from https://ytmusicapi.readthedocs.io/en/stable/setup/browser.html
 
-`./schedule_shows.py --get_shows > my_shows.ini`
+`./get_schedule.py --get_shows > my_shows.ini`
 <br> Edit `my_shows.ini`, to leave just the list you're interested in
 
 `deactivate`
