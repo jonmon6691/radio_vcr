@@ -2,4 +2,4 @@
 Description="Records a show, should be triggered by systemd-run timer created by schedule_recording.service"
 
 [Service]
-ExecStart=src/radio_vcr/record_show.sh %i
+ExecStart=%h/src/radio_vcr/record_show.sh %i

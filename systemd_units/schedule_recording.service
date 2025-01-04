@@ -2,4 +2,4 @@
 Description="Checks the KMHD website for the broadcast schedule and runs the `systemd-run` command to schedule the recorder"
 
 [Service]
-ExecStart=src/radio_vcr/schedule_shows.sh
+ExecStart=%h/src/radio_vcr/schedule_shows.sh
