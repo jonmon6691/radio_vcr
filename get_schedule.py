@@ -29,9 +29,9 @@ class Show:
         return f"{self.title} [{self.start} - {self.end}]"
 
 
-def shows_next_24h() -> [datetime.datetime]:
+def shows_next_n_days(n) -> [datetime.datetime]:
     shows = []
-    for offset in range(2): # Get today and tomorrow
+    for offset in range(n+1): # Get today and tomorrow
         url = get_url(offset)
         page = urllib.request.urlopen(url)
         html = BeautifulSoup(page.read(), "html.parser")
@@ -52,7 +52,7 @@ def shows_next_24h() -> [datetime.datetime]:
 
     # Return shows that start in the next 24h
     window_start = datetime.datetime.now().astimezone()
-    window_end = window_start + datetime.timedelta(days=1)
+    window_end = window_start + datetime.timedelta(days=n)
     return [s for s in shows if window_start < s.start < window_end]
 
 if __name__ == "__main__":
@@ -67,7 +67,7 @@ if __name__ == "__main__":
     args = parser.parse_args()
 
     if args.get_shows:
-        for show in shows_next_24h():
+        for show in shows_next_n_days(7):
             print(show.title)
         exit(0)
 
@@ -77,7 +77,7 @@ if __name__ == "__main__":
         exit(1)
 
     selected_shows = set([line.strip() for line in open(args.shows).readlines()])
-    shows = shows_next_24h()
+    shows = shows_next_n_days(1)
     shows = [s for s in shows if s.title in selected_shows]
     sys.stderr.write(f"Got {len(shows)} shows\n")
 
