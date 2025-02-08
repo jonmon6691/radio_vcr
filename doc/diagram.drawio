@@ -1,17 +1,17 @@
 <mxfile host="65bd71144e" scale="2" border="0">
     <diagram id="7TKIwkNf6iHyQ7NIYCmb" name="Page-1">
-        <mxGraphModel dx="1475" dy="953" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+        <mxGraphModel dx="1540" dy="1295" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
             <root>
                 <mxCell id="0"/>
                 <mxCell id="1" parent="0"/>
-                <mxCell id="31" value="" style="rounded=1;whiteSpace=wrap;html=1;arcSize=3;" vertex="1" parent="1">
-                    <mxGeometry width="410" height="740" as="geometry"/>
+                <mxCell id="31" value="" style="rounded=1;whiteSpace=wrap;html=1;arcSize=3;" parent="1" vertex="1">
+                    <mxGeometry width="410" height="780" as="geometry"/>
                 </mxCell>
                 <mxCell id="27" value="" style="rounded=1;whiteSpace=wrap;html=1;arcSize=3;" parent="1" vertex="1">
-                    <mxGeometry x="34" y="356" width="300" height="364" as="geometry"/>
+                    <mxGeometry x="34" y="356" width="300" height="404" as="geometry"/>
                 </mxCell>
                 <mxCell id="26" value="" style="rounded=1;whiteSpace=wrap;html=1;arcSize=3;" parent="1" vertex="1">
-                    <mxGeometry x="19" y="340" width="300" height="360" as="geometry"/>
+                    <mxGeometry x="19" y="340" width="300" height="400" as="geometry"/>
                 </mxCell>
                 <mxCell id="7" value="" style="edgeStyle=none;html=1;" parent="1" source="2" target="3" edge="1">
                     <mxGeometry relative="1" as="geometry"/>
@@ -25,7 +25,7 @@
                 <mxCell id="3" value="schedule_recording.service" style="rounded=1;whiteSpace=wrap;html=1;" parent="1" vertex="1">
                     <mxGeometry x="79" y="109" width="170" height="41" as="geometry"/>
                 </mxCell>
-                <mxCell id="24" style="edgeStyle=orthogonalEdgeStyle;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" parent="1" target="5" edge="1" source="4">
+                <mxCell id="24" style="edgeStyle=orthogonalEdgeStyle;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" parent="1" source="4" target="5" edge="1">
                     <mxGeometry relative="1" as="geometry">
                         <mxPoint x="164" y="229" as="sourcePoint"/>
                         <mxPoint x="170" y="220" as="targetPoint"/>
@@ -65,16 +65,25 @@
                     <mxGeometry x="99" y="520" width="130" height="44" as="geometry"/>
                 </mxCell>
                 <mxCell id="15" value="upload_to_youtube.py" style="rounded=1;whiteSpace=wrap;html=1;" parent="1" vertex="1">
-                    <mxGeometry x="121" y="578" width="170" height="44" as="geometry"/>
+                    <mxGeometry x="121" y="578" width="170" height="32" as="geometry"/>
                 </mxCell>
                 <mxCell id="16" value="notify.py" style="rounded=1;whiteSpace=wrap;html=1;" parent="1" vertex="1">
-                    <mxGeometry x="121" y="640" width="100" height="34" as="geometry"/>
+                    <mxGeometry x="121" y="628" width="100" height="34" as="geometry"/>
                 </mxCell>
                 <mxCell id="19" value="" style="edgeStyle=orthogonalEdgeStyle;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;exitX=0;exitY=0.5;exitDx=0;exitDy=0;" parent="1" source="14" target="15" edge="1">
                     <mxGeometry relative="1" as="geometry"/>
                 </mxCell>
                 <mxCell id="28" value="get_schedule.py can create as many future recordings as it likes" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
                     <mxGeometry x="170" y="280" width="130" height="50" as="geometry"/>
+                </mxCell>
+                <mxCell id="32" value="update_screen.py" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+                    <mxGeometry x="121" y="680" width="119" height="34" as="geometry"/>
+                </mxCell>
+                <mxCell id="33" value="" style="edgeStyle=orthogonalEdgeStyle;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;exitX=0;exitY=0.5;exitDx=0;exitDy=0;" edge="1" parent="1" source="14" target="32">
+                    <mxGeometry relative="1" as="geometry">
+                        <mxPoint x="109" y="552" as="sourcePoint"/>
+                        <mxPoint x="131" y="667" as="targetPoint"/>
+                    </mxGeometry>
                 </mxCell>
             </root>
         </mxGraphModel>

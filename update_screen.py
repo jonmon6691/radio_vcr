@@ -22,7 +22,7 @@ except NotImplementedError:
 def disp_on_air(args):
     print(f"Change display: On now: {args.SHOW}")
 
-    img = Image.open("kmhd_test.png")
+    img = Image.open("kmhd_bg.png")
     draw = ImageDraw.Draw(img)
 
     show_x = 31

@@ -5,7 +5,7 @@ Do you listen to [KMHD](https://www.kmhd.org/give/) on an analog radio at home a
 
 Well then you must be me! Which is good because this code isn't portable and I'm only uploading it here in case my pi gets fried or something.
 
-<img src="doc/P_20241218_225835.jpg" width=300> <img src="doc/P_20241218_225603.jpg" width=300>
+<img src="doc/inkypi.jpg" width=600>
 
 ### After upload: 
 _Note: battery percentage was exactly 89.1% ;)_ <br>
@@ -20,15 +20,16 @@ Execution flow:
  * the timer triggers `schedule_recording.service` to run `schedule_shows.sh`
  * `schedule_shows.sh` runs the python script `get_schedule.py` using the project virtual environment and passes all its output to bash to run as commands
  * `get_schedule.py` outputs one command per line of the form `sytemd-run --user --on-calendar ... --unit vcr_record@Title__123.service`
- * the `vcr_record@.service` runs `record_show.sh` which makes the recording and uploads it to Youtube Music
+ * the `vcr_record@.service` runs `record_show.sh` which makes the recording and uploads it to Youtube Music and keeps the screen up to date
 
 ## Flow Control
 <img src="doc/diagram.png" width=300>
 
 # Hardware
 
-* [Raspberry Pi 5](https://www.raspberrypi.com/products/raspberry-pi-5/)
-  * Any linux machine will work
+* [Raspberry Pi Zero W](https://www.raspberrypi.com/products/raspberry-pi-zero-w/)
+  * For compactness and compatibility with the screen
+* [Pimoroni Inky pHAT](https://shop.pimoroni.com/products/inky-phat?variant=12549254905939)
 * [Behringer UCA202](https://www.behringer.com/product.html?modelCode=0805-AAC)
   * Any audio input will work, I chose this because I needed RCA inputs
 
