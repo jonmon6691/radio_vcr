@@ -20,40 +20,55 @@ class Show:
         self = cls()
         self.title = j['program']['title']
         starts = j['start_datetime']
-        self.start = datetime.datetime.fromisoformat(starts[:-2] + ":" + starts[-2:])
+        start = datetime.datetime.fromisoformat(starts[:-2] + ":" + starts[-2:])
+        self.start = start.astimezone(datetime.datetime.now().astimezone().tzinfo)
         ends = j['end_datetime']
-        self.end = datetime.datetime.fromisoformat(ends[:-2] + ":" + ends[-2:])
+        end = datetime.datetime.fromisoformat(ends[:-2] + ":" + ends[-2:])
+        self.end = end.astimezone(datetime.datetime.now().astimezone().tzinfo)
         return self
 
     def __repr__(self):
         return f"{self.title} [{self.start} - {self.end}]"
 
-
-def shows_next_n_days(n) -> [datetime.datetime]:
+def shows_next_n_days(n) -> [Show]:
     shows = []
     for offset in range(n+1): # Get today and tomorrow
-        url = get_url(offset)
-        page = urllib.request.urlopen(url)
-        html = BeautifulSoup(page.read(), "html.parser")
-        script = html.find_all("script", id="fusion-metadata")
-        
-        # Schedule data is in this javascript variable
-        content_prefix = 'Fusion.globalContent='
-        b = [l for l in script[0].text.split(';') if l.startswith(content_prefix)]
-        if len(b) == 0:
-            import PushBullet
-            import pushbullet_token
-            pb = PushBullet(pushbullet_token.PUSHBULLET_API_TOKEN)
-            pb.push_note("VCR Fatal: They changed their javascript!!")
-            exit(1)
-
-        raw_js = json.loads(b[0][len(content_prefix):])
-        shows += [Show.from_json(s) for s in raw_js]
+        shows.extend(get_schedule(offset))
 
     # Return shows that start in the next 24h
     window_start = datetime.datetime.now().astimezone()
     window_end = window_start + datetime.timedelta(days=n)
     return [s for s in shows if window_start < s.start < window_end]
+
+def get_schedule(offset):
+    url = get_url(offset)
+    page = urllib.request.urlopen(url)
+    html = BeautifulSoup(page.read(), "html.parser")
+    script = html.find_all("script", id="fusion-metadata")
+    # Schedule data is in this javascript variable
+    content_prefix = 'Fusion.globalContent='
+    b = [l for l in script[0].text.split(';') if l.startswith(content_prefix)]
+    if len(b) == 0:
+        import PushBullet
+        import pushbullet_token
+        pb = PushBullet(pushbullet_token.PUSHBULLET_API_TOKEN)
+        pb.push_note("VCR Fatal: get_schedule: They changed their javascript!!")
+        exit(1)
+    raw_js = json.loads(b[0][len(content_prefix):])
+    return [Show.from_json(s) for s in raw_js]
+
+
+def get_next_show_within(n, my_shows_file) -> Show:
+    my_shows = load_my_shows(my_shows_file)
+    for offset in range(n+1):
+        for show in get_schedule(offset):
+            if show.title in my_shows and show.start > datetime.datetime.now().astimezone():
+                return show
+
+    return None # Nothing coming up :(
+
+def load_my_shows(my_shows_file):
+    return set([line.strip() for line in open(my_shows_file).readlines()])
 
 if __name__ == "__main__":
     import sys
@@ -76,14 +91,14 @@ if __name__ == "__main__":
         parser.print_help()
         exit(1)
 
-    selected_shows = set([line.strip() for line in open(args.shows).readlines()])
+    selected_shows = load_my_shows(args.shows)
     shows = shows_next_n_days(1)
     shows = [s for s in shows if s.title in selected_shows]
     sys.stderr.write(f"Got {len(shows)} shows\n")
 
     for show in shows:
-        start_rec = show.start.astimezone(datetime.datetime.now().astimezone().tzinfo) - datetime.timedelta(minutes=1)
-        end_rec = show.end.astimezone(datetime.datetime.now().astimezone().tzinfo) + datetime.timedelta(minutes=1)
+        start_rec = show.start - datetime.timedelta(minutes=1)
+        end_rec = show.end + datetime.timedelta(minutes=1)
         duration = end_rec - start_rec # One hour, starting 1m early and ending 1m late
 
         # Using `systemd-run`
